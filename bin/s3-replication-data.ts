@@ -24,7 +24,7 @@ const statefulC = new StatefulS3ReplicationDataStackServiceC(
 	{}
 );
 
-new StatefulS3ReplicationDataStackServiceA(
+const statefulA = new StatefulS3ReplicationDataStackServiceA(
 	app,
 	'S3ReplicationDataStackStatefulA',
 	{ destinationBuckets: [statefulB.bucket, statefulC.bucket] }
@@ -33,5 +33,5 @@ new StatefulS3ReplicationDataStackServiceA(
 new StatelessS3ReplicationDataStackServiceA(
 	app,
 	'S3ReplicationDataStackStatelessA',
-	{}
+	{ uploadBucket: statefulA.uploadBucket, masterBucket: statefulA.masterBucket }
 );
