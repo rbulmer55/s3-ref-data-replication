@@ -49,6 +49,15 @@ export class StatelessS3ReplicationDataStackServiceA extends cdk.Stack {
 		);
 		this.cleanserLambda = cleanserFunction;
 
+		/*
+		 * Event Notifcation Workaround. Bug: https://github.com/aws/aws-cdk/issues/5760
+		 *
+		 * props.uploadBucket.addEventNotification(
+				s3.EventType.OBJECT_CREATED_PUT,
+				new LambdaDestination(cleanserFunction)
+			);
+		 */
+
 		cleanserFunction.addPermission(`AllowS3Invocation`, {
 			action: 'lambda:InvokeFunction',
 			principal: new iam.ServicePrincipal('s3.amazonaws.com'),

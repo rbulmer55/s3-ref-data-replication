@@ -1,5 +1,7 @@
 # S3 Replication across services
 
+> There is currently a bug with the CDK using Event Notifications (https://github.com/aws/aws-cdk/issues/5760). See Custom Resource workaround in "service-a-stateless.ts".
+
 This demo can be extended to perform cross-account replicaiton.
 
 However to keep things simple, we deploy 3 services each with their own Cloudformation Stack to demonstrate the replication.
