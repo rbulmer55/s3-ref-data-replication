@@ -17,19 +17,21 @@ export const handler = async (event: S3Event) => {
 	}
 
 	for await (const record of event.Records) {
-		console.log('Event Name: %s', record.eventName);
-		console.log('S3 Request: %j', record.s3);
+		// Debug
+		// console.log('Event Name: %s', record.eventName);
+		// console.log('S3 Request: %j', record.s3);
 
-		const rawS3 = await s3
+		const rawObject = await s3
 			.getObject({
 				Key: record.s3.object.key,
 				Bucket: srcBucketName || '',
 			})
 			.promise();
 
-		const dataObject = JSON.parse(rawS3.Body?.toString('utf-8') || '');
+		const dataObject = JSON.parse(rawObject.Body?.toString('utf-8') || '');
 
-		console.log(dataObject);
+		// debug
+		// console.log(dataObject);
 
 		if (!ajv.validate(schema, dataObject)) {
 			throw new Error(
